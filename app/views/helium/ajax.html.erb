@@ -1,0 +1,104 @@
+  <h1 class="text-4xl font-bold mb-10 bg-gradient-to-r from-rose-400 to-purple-500 bg-clip-text text-transparent tracking-tight drop-shadow-sm">
+    🎈 Helium Ajax Examples
+  </h1>
+
+  <div class="grid gap-8 sm:grid-cols-1 lg:grid-cols-3 max-w-6xl w-full">
+
+    <!-- Ajax Example -->
+    <section class="bg-gradient-to-br from-white to-gray-50 rounded-2xl shadow-md p-8">
+      <h2 class="text-2xl font-semibold text-gray-700 mb-4">HTML Response</h2>
+      <p id="table" class="text-gray-600 mb-4">
+        Replace this paragraph with an HTML table by clicking on the button below.
+      </p>
+      <button
+        @get.once="https://html-mock.fly.dev/tag/table"
+        @target="#table:replace"
+        @loading="<img src='https://media1.tenor.com/m/tEBoZu1ISJ8AAAAC/spinning-loading.gif' width=120 alt='Loading...'>"
+        class="px-6 py-2 bg-gradient-to-r from-rose-300 to-purple-400 text-white font-medium rounded-lg shadow-sm hover:from-rose-400 hover:to-purple-500 hover:scale-105 transition-all"
+      >
+        Get HTML table
+      </button>
+    </section>
+
+    <!-- Requests Example -->
+    <section class="bg-gradient-to-br from-white to-gray-50 rounded-2xl shadow-md p-8">
+      <h2 class="text-2xl font-semibold text-gray-700 mb-4">Request Methods</h2>
+      <p class="text-gray-600 mb-4">
+        Make a PUT and DELETE request using the buttons below. The delete request requires you to hold down the shift key while clicking.
+      </p>
+      <div class="flex flex-wrap gap-3 mb-4">
+        <button
+          @put="https://html-mock.fly.dev/tag/paragraph"
+          @options="{loading: 'account loading...'}"
+          @params="{cash: 2}"
+          @target="put_response"
+          class="px-6 py-2 bg-gradient-to-r from-rose-300 to-purple-400 text-white font-medium rounded-lg shadow-sm hover:from-rose-400 hover:to-purple-500 hover:scale-105 transition-all"
+        >
+          Put Money In Your Account
+        </button>
+
+        <button
+          @delete.shift="https://html-mock.fly.dev/tag/paragraph"
+          @params="{account: 1}"
+          @target="delete_response"
+          class="px-6 py-2 bg-gradient-to-r from-rose-300 to-purple-400 text-white font-medium rounded-lg shadow-sm hover:from-rose-400 hover:to-purple-500 hover:scale-105 transition-all"
+        >
+          Delete Your Account
+        </button>
+      </div>
+
+      <div @html="put_response" class="bg-blue-50 p-4 m-4 rounded-lg border border-blue-200 text-gray-700">Put response</div>
+      <div @html="delete_response" class="bg-red-50 p-4 m-4 rounded-lg border border-red-200 text-gray-700">Delete response</div>
+    </section>
+
+    <!-- Posts Example -->
+    <section @ref="posts" class="bg-gradient-to-br from-white to-gray-50 rounded-2xl shadow-md p-8">
+      <h2 class="text-2xl font-semibold text-gray-700 mb-4">Posts (JSON response)</h2>
+            <p class="text-gray-600 mb-4">
+        Add new posts to the list below. Create your own with the form below.
+        Try clicking the GET POST button repeatedly — it’s debounced to avoid multiple adds.
+      </p>
+
+      <form @ref="form" class="bg-white p-6 rounded-lg shadow-sm space-y-4 mb-6">
+        <label class="block">
+          <span class="text-gray-700 font-medium mb-2 block">Title:</span>
+          <input type="hidden" name="userId" value="5">
+          <input
+            name="title"
+            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-300 focus:border-transparent outline-none transition"
+          >
+        </label>
+
+        <label class="block">
+          <span class="text-gray-700 font-medium mb-2 block">Body:</span>
+          <textarea
+            name="body"
+            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-300 focus:border-transparent outline-none transition min-h-32 resize-y"
+          ></textarea>
+        </label>
+
+        <button
+          @post.prevent="https://dummyjson.com/posts/add"
+          @params="new FormData($form)"
+          @target="$posts:append"
+          @template="templates.post"
+          class="px-6 py-2 bg-gradient-to-r from-rose-300 to-purple-400 text-white font-medium rounded-lg shadow-sm hover:from-rose-400 hover:to-purple-500 hover:scale-105 transition-all"
+        >
+          Create New Post
+        </button>
+      </form>
+
+      <div class="flex flex-wrap gap-3 mb-6">
+        <button
+          @get.debounce:700="https://dummyjson.com/posts/1"
+          @target="$posts:append"
+          @options="{loading: '<p>Post is <b>loading</b></p>'}"
+          @template="templates.post"
+          class="px-6 py-2 bg-gradient-to-r from-rose-300 to-purple-400 text-white font-medium rounded-lg shadow-sm hover:from-rose-400 hover:to-purple-500 hover:scale-105 transition-all"
+        >
+          Get Post
+        </button>
+      </div>
+    </section>
+
+  </div>
