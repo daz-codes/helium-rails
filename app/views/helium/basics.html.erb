@@ -1,61 +1,49 @@
 
-  <h1 class="text-5xl font-semibold mb-12 bg-gradient-to-r from-rose-400 to-purple-500 bg-clip-text text-transparent tracking-tight drop-shadow-sm">
-    🎈 Helium Examples
-  </h1>
+<div class="page" @effect:*="console.log('something changed ...')">
+  <h1>🎈 Helium Examples</h1>
 
-  <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-4 w-full max-w-6xl">
+  <div class="examples">
 
     <!-- Counter -->
-    <div class="bg-gradient-to-br from-white to-gray-50 rounded-3xl shadow-md p-6 flex flex-col items-center justify-center text-center hover:shadow-lg">
-      <h2 class="text-xl font-semibold text-gray-700 mb-4">Counter</h2>
-      <button
-        class="px-5 py-2 bg-gradient-to-r from-rose-300 to-purple-400 text-white rounded-lg hover:from-rose-400 hover:to-purple-500 transition shadow-sm"
-        @click="count++">
-        💜 <b @text="count">0</b>
-      </button>
+    <div class="card">
+      <h2>Counter</h2>
+      <button @click="count++">Clicked <b @text="count">0</b> times</button>
     </div>
 
     <!-- Dynamic Classes -->
     <div
       @data="{ active: false }"
-      data-he-attr:class="{'bg-pink-100': active, 'bg-gradient-to-br from-white to-gray-50': !active}"
-      class="rounded-3xl shadow-md p-6 flex flex-col items-center justify-center text-center hover:shadow-lg"
+      :class="{'bg-red-400': active}"
+      class="card"
     >
-      <h2 class="text-xl font-semibold text-gray-700 mb-4">Dynamic Classes</h2>
-      <button
-        class="px-5 py-2 rounded-lg text-white transition bg-gradient-to-r from-rose-300 to-purple-400 hover:from-rose-400 hover:to-purple-500 shadow-sm"
-        @click="active = !active"
-      >
-        Toggle
-      </button>
+      <h2>Dynamic Classes</h2>
+      <button @click="active = !active">Toggle</button>
     </div>
 
-    <!-- Two-way Binding -->
-    <div class="bg-gradient-to-br from-white to-gray-50 rounded-3xl shadow-md p-6 flex flex-col items-center justify-center text-center hover:shadow-lg">
-      <h2 class="text-xl font-semibold text-gray-700 mb-4">2-Way Bindings</h2>
+    <!-- Two-way Binding with Calculate -->
+    <div class="card">
+      <h2>2-Way Bindings</h2>
       <input
-        @bind="name"
-        placeholder="Enter your name"
-        class="border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-rose-300 mb-3 w-2/3"
+        @bind="firstname"
+        placeholder="First name"
       >
-      <p class="text-gray-600">Hello <b @text="name"></b></p>
-      <button
-        class="mt-4 px-5 py-2 bg-gradient-to-r from-rose-300 to-purple-400 text-white rounded-lg hover:from-rose-400 hover:to-purple-500 transition shadow-sm"
-        @click="name = ''"
+      <input
+        @bind="lastname"
+        placeholder="Last name"
       >
-        Clear
-      </button>
+      <span
+        @calculate:fullName="firstname && lastname ? firstname + ' ' + lastname : firstname || lastname || ''"
+      ></span>
+      <p>Hello <b @text="fullname"></b></p>
+      <button @click="firstname = '', lastname = ''">Clear</button>
     </div>
 
     <!-- Visibility Toggle -->
-    <div @data="{ show: false }" class="bg-gradient-to-br from-white to-gray-50 rounded-3xl shadow-md p-6 flex flex-col items-center justify-center text-center hover:shadow-lg">
-      <h2 class="text-xl font-semibold text-gray-700 mb-4">Visibility Toggle</h2>
-      <button
-        class="px-5 py-2 bg-gradient-to-r from-rose-300 to-purple-400 text-white rounded-lg hover:from-rose-400 hover:to-purple-500 transition mb-3 shadow-sm"
-        @click="show = !show">
-        Toggle
-      </button>
-      <p @visible="show" class="text-gray-600">Now you see me!</p>
+    <div @data="{ show: false }" class="card">
+      <h2>Visibility Toggle</h2>
+      <button @click="show = !show">Toggle</button>
+      <p @visible="show">Now you see me!</p>
     </div>
 
   </div>
+</div>

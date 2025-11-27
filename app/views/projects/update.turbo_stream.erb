@@ -1,0 +1,7 @@
+<%= turbo_stream.append "messages" do %>
+  <div class="w-3/4 p-3 mx-auto mb-2 rounded bg-blue-50 text-blue-800 border border-blue-200 shadow-sm">
+      <b data-he-text="time_ago_in_words(Math.floor((timestamp/1000 - <%= Time.now.to_i %>)/60))"></b>:
+      <%= @project.name %> Project updated!
+      It is currently <b data-he-text="<%= he(:active,@project) %> ? 'active' : 'inactive'"></b>
+  </div>
+<% end %>

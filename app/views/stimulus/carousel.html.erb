@@ -1,4 +1,55 @@
-<div>
-  <h1 class="font-bold text-4xl">Stimulus#carousel</h1>
-  <p>Find me in app/views/stimulus/carousel.html.erb</p>
+<% ids = %w(25 29 35 56 77 82 89 90 102 107) %>
+
+
+<div
+data-controller="carousel">
+
+    <!-- Image Grid -->
+    <div class="flex gap-6 w-full justify-stretch p-4">
+        <div class="grid grid-cols-5 gap-3">
+            <% ids.each_with_index do |pic, index| %>
+                <div class=" aspect-square flex items-center justify-center rounded-lg shadow-md cursor-pointer transition transform hover:scale-110 hover:shadow-lg bg-gradient-to-br from-gray-50 to-gray-100
+ hover:from-blue-50 hover:to-blue-100 "
+                    data-index="<%=index%>"
+                    data-action="click->carousel#openIndex" >
+                    <%= image_tag "https://picsum.photos/id/#{pic}/300/300",
+                                  class: "w-full h-full object-cover rounded-lg pointer-events-none" %>
+                </div>
+            <% end %>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div data-carousel-target="modal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center transition-opacity duration-300 ">
+     <div class="relative w-full max-w-4xl aspect-[16/9] bg-gray-900 rounded-xl overflow-hidden shadow-2xl ring-1 ring-white/10">
+         <div class="overflow-hidden h-full rounded-lg relative">
+             <% ids.each_with_index do |pic, index| %>
+                 <%= image_tag "https://picsum.photos/id/#{pic}/1200/800",
+                    class: "absolute inset-0 w-full h-full object-cover transition-opacity duration-300",
+                    data: {
+                        carousel_target: "slide"
+                    },
+                    "aria-label": "Slide #{index + 1}" %>
+            <% end %>
+         </div>
+        <!-- Nav Buttons -->
+        <button type="button"
+            data-action="click->carousel#previous"
+            class=" absolute left-3 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/30 text-white text-3xl font-bold px-4 py-2 rounded-full shadow-md backdrop-blur transition transform hover:scale-105 " >
+                &lt;
+        </button>
+        <button type="button"
+            data-action="click->carousel#next"
+            class=" absolute right-3 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/30 text-white text-3xl font-bold px-4 py-2 rounded-full shadow-md backdrop-blur transition transform hover:scale-105" >
+                &gt;
+        </button>
+        <!-- Close Button -->
+        <button type="button"
+            data-action="click->carousel#close"
+            class=" absolute top-3 right-4 text-3xl text-white/80 hover:text-white transition bg-white/10 hover:bg-white/20 rounded-full w-10 h-10 flex items-center justify-center
+        shadow-md backdrop-blur " >
+            &times;
+        </button>
+     </div>
+ </div>
 </div>

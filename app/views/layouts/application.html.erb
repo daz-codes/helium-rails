@@ -8,7 +8,6 @@
     <meta name="mobile-web-app-capable" content="yes">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-    <h1 class="absolute bg-purple-300"><%= link_to "Beyond Stimulus", root_path %></h1>
 
     <%= yield :head %>
 
@@ -26,7 +25,40 @@
 
   <body>
     <main class="min-h-screen bg-gradient-to-br from-pink-100 via-white to-blue-100 flex flex-col items-center p-10">
-      <%= yield %>
+        <h1 class="text-6xl font-bold mb-10 bg-gradient-to-r from-sky-200 via-pink-300 to-yellow-100 inline-block text-transparent bg-clip-text"><%= link_to "Beyond Stimulus", root_path %></h1>
+
+        <%= yield %>
+        <ul class="flex space-x-4 border-b border-slate-200">
+          <li>
+            <%= link_to "Helium Basic Examples",
+                  "/helium/basics",
+                  class: "px-4 py-2 inline-block rounded-t-lg bg-slate-100 text-slate-700 hover:bg-slate-200 hover:text-slate-900 transition" %>
+          </li>
+
+          <li>
+            <%= link_to "Stimulus Carousel",
+                  "/stimulus/carousel",
+                  class: "px-4 py-2 inline-block rounded-t-lg bg-slate-100 text-slate-700 hover:bg-slate-200 hover:text-slate-900 transition" %>
+          </li>
+
+          <li>
+            <%= link_to "Helium Carousel",
+                  "/helium/carousel",
+                  class: "px-4 py-2 inline-block rounded-t-lg bg-slate-100 text-slate-700 hover:bg-slate-200 hover:text-slate-900 transition" %>
+          </li>
+
+          <li>
+            <%= link_to "Helium Ajax Examples",
+                  "/helium/ajax",
+                  class: "px-4 py-2 inline-block rounded-t-lg bg-slate-100 text-slate-700 hover:bg-slate-200 hover:text-slate-900 transition" %>
+          </li>
+
+          <li>
+            <%= link_to "Rails Projects",
+                  "/projects",
+                  class: "px-4 py-2 inline-block rounded-t-lg bg-slate-100 text-slate-700 hover:bg-slate-200 hover:text-slate-900 transition" %>
+          </li>
+        </ul>
     </main>
   </body>
 </html>

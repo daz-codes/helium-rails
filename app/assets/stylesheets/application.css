@@ -1,10 +1,117 @@
-/*
- * This is a manifest file that'll be compiled into application.css.
- *
- * With Propshaft, assets are served efficiently without preprocessing steps. You can still include
- * application-wide styles in this file, but keep in mind that CSS precedence will follow the standard
- * cascading order, meaning styles declared later in the document or manifest will override earlier ones,
- * depending on specificity.
- *
- * Consider organizing styles into separate files for maintainability.
- */
+/* Page layout */
+.page {
+    min-height: 100vh;
+    background: linear-gradient(to bottom right, #fbcfe8, #ffffff, #bfdbfe);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2.5rem;
+}
+
+/* Title */
+.page h1 {
+    font-size: 3rem;
+    font-weight: 600;
+    margin-bottom: 3rem;
+    background: linear-gradient(to right, #fb7185, #a855f7);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: -0.02em;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+}
+
+/* Grid container */
+.examples {
+    display: grid;
+    gap: 2rem;
+    width: 100%;
+    max-width: 72rem;
+}
+
+@media (min-width: 640px) {
+    .examples {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+@media (min-width: 1024px) {
+    .examples {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+/* Card styles */
+.card {
+    border-radius: 1.5rem;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    padding: 1.5rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+/* Card headings */
+.card h2 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #374151;
+    margin-bottom: 1rem;
+}
+
+/* Buttons */
+.card button {
+    padding: 0.5rem 1.25rem;
+    border: none;
+    border-radius: 0.5rem;
+    color: white;
+    background: linear-gradient(to right, #fda4af, #c084fc);
+    cursor: pointer;
+    transition:
+        background 0.2s ease,
+        transform 0.1s ease,
+        box-shadow 0.2s ease;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.card button:hover {
+    background: linear-gradient(to right, #fb7185, #a855f7);
+}
+
+/* Inputs */
+.card input {
+    border: 1px solid #d1d5db;
+    border-radius: 0.5rem;
+    padding: 0.5rem 0.75rem;
+    width: 66%;
+    margin-bottom: 0.75rem;
+    outline: none;
+    transition:
+        box-shadow 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.card input:focus {
+    border-color: #fda4af;
+    box-shadow: 0 0 0 3px rgba(252, 164, 175, 0.4);
+}
+
+/* Text */
+.card p {
+    color: #4b5563;
+}
+
+/* Margin for bottom button */
+.card button + button,
+.card p + button {
+    margin-top: 1rem;
+}
+
+.card.active {
+    background: #fce7f3;
+}

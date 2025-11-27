@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :projects
   root "home#index"
   get 'helium/:action', controller: 'helium'
   get "stimulus/carousel"

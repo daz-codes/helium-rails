@@ -1,0 +1,105 @@
+<% content_for :title, "Projects" %>
+
+<div class="w-full space-y-8"
+     data-he="{
+            timestamp: 0,
+        }"
+     data-he-init="setInterval(() => timestamp = Date.now(),1000)"
+     data-he-import="time_ago_in_words"
+>
+  <% if notice.present? %>
+    <p class="py-2 px-3 bg-green-50 text-green-700 font-medium rounded-md inline-block shadow-sm" id="notice">
+      <%= notice %>
+    </p>
+  <% end %>
+
+  <!-- Header -->
+  <div class="flex justify-between items-center">
+    <h1 class="font-extrabold text-5xl tracking-tight text-slate-900 drop-shadow-sm">
+      Projects
+    </h1>
+
+    <%= link_to "New project",
+      new_project_path,
+      class: "rounded-xl px-5 py-3 bg-blue-600 hover:bg-blue-500 text-white font-semibold shadow-lg shadow-blue-200 transition-all" %>
+  </div>
+
+  <!-- Cards Grid -->
+  <div id="projects" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+    <% if @projects.any? %>
+      <% @projects.each do |project| %>
+
+        <div data-he-attr:class="{'bg-blue-100': <%= he(:active,project) %>}" class="border border-slate-200 rounded-2xl shadow-md p-6 hover:shadow-xl transition-all">
+
+          <!-- Project Name -->
+          <h2 class="text-4xl font-bold text-blue-800 mb-6 border-b border-slate-200 pb-3">
+            <%= project.name %>
+          </h2>
+
+          <%= form_with model: project, url: "#", method: :get, class: "space-y-6" do |f| %>
+
+            <!-- Active Checkbox -->
+            <div class="flex items-center space-x-3">
+              <%= f.check_box :active,
+                    checked: project.active,
+                    data: {
+                        he_bind: he(:active,project),
+                        he_patch: project_url(project),
+                    },
+                    class: "h-5 w-5 rounded border-slate-400 text-blue-600 focus:ring-blue-500 cursor-pointer" %>
+
+              <label class="text-slate-800 font-medium">
+                Active
+              </label>
+            </div>
+
+            <!-- Stage Select -->
+            <div>
+              <%= f.select :stage,
+                    Project.stages.keys.map { |s| [s.humanize, s] },
+                    { selected: project.stage },
+                    data: {
+                        he_bind: he(:stage,project),
+                        he_patch: project_url(project),
+                    },
+                    class: "w-full border border-slate-300 rounded-lg px-3 py-2 bg-white text-slate-800 shadow-sm focus:ring-blue-500 focus:border-blue-500" %>
+            </div>
+
+            <!-- Radio Group -->
+            <div>
+
+              <div class="space-y-2">
+
+                <% Project.stages.keys.each do |stage| %>
+                  <label class="flex items-center space-x-2 cursor-pointer text-gray-700">
+                      <%= f.radio_button :stage, stage,
+                            checked: project.stage == stage,
+                            data: { he_bind: he(:stage,project),
+                                    he_patch: project_url(project),
+                            },
+                            class: "h-5 w-5 border-gray-300 text-blue-600 focus:ring-blue-500"
+                      %>
+
+                    <span class="text-slate-800 font-medium">
+                      <%= stage.titleize %>
+                    </span>
+                  </label>
+                <% end %>
+
+              </div>
+              <p>This project is currently <b data-he-text="<%= he(:active,project) %> ? 'active' : 'inactive'"></b></p>
+            </div>
+
+          <% end %>
+        </div>
+
+      <% end %>
+
+    <% else %>
+      <p class="text-center text-slate-500 py-10 col-span-3">No projects found.</p>
+    <% end %>
+
+  </div>
+</div>
+<div id="messages" class="mt-4 w-full"></div>
